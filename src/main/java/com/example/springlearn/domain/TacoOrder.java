@@ -1,8 +1,12 @@
-package com.example.springlearn;
+package com.example.springlearn.domain;
+
+import com.example.springlearn.domain.Taco;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class TacoOrder {
 
     private String deliveryName;

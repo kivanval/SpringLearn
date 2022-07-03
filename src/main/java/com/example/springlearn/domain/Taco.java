@@ -1,4 +1,4 @@
-package com.example.springlearn;
+package com.example.springlearn.domain;
 
 import lombok.Data;
 
