@@ -4,6 +4,7 @@ import com.example.springlearn.domain.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,15 +26,14 @@ public class JdbcIngredientRepository implements IngredientRepository {
     @Override
     public Collection<Ingredient> findAll() {
         return jdbcTemplate.query(
-                "select id, name, type from Ingredient",
+                "select id, name, type from TACO_CLOUD.INGREDIENT",
                 this::mapToRowIngredient);
     }
 
     @Override
     public Optional<Ingredient> findById(String id) {
-        jdbcTemplate.q
         List<Ingredient> results = jdbcTemplate.query(
-                "select id, name, type from Ingredient where id=?",
+                "select id, name, type from TACO_CLOUD.INGREDIENT where id = ?",
                 this::mapToRowIngredient,
                 id
         );
@@ -42,20 +42,21 @@ public class JdbcIngredientRepository implements IngredientRepository {
 
     private Ingredient mapToRowIngredient(ResultSet row, int rowNum) throws SQLException {
         return new Ingredient(
-                row.getString("id"),
+                row.getLong("id"),
                 row.getString("name"),
                 Ingredient.Type.valueOf(row.getString("type"))
         );
     }
 
     @Override
+    @Transactional
     public Ingredient save(Ingredient ingredient) {
         jdbcTemplate.update(
-                "insert into Ingredient (id, name, type) values (?, ?, ?)",
-                ingredient.getId(),
+                "insert into TACO_CLOUD.INGREDIENT (name, type) values (?, ?)",
                 ingredient.getName(),
                 ingredient.getType().toString()
         );
         return ingredient;
     }
+
 }
