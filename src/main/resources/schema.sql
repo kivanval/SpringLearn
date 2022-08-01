@@ -22,7 +22,7 @@ create table if not exists TACO_CLOUD.Taco
     created_at    timestamp   not null,
     primary key (id)
 );
-create table if not exists TACO_CLOUD.Ingredient_Ref
+create table if not exists TACO_CLOUD.Taco_Ingredient
 (
     ingredient_id bigint not null,
     taco_id       bigint not null,
@@ -38,7 +38,7 @@ create table if not exists TACO_CLOUD.Ingredient
 
 alter table TACO_CLOUD.Taco
     add foreign key (taco_order_id) references TACO_CLOUD.Taco_Order (id);
-alter table TACO_CLOUD.Ingredient_Ref
+alter table TACO_CLOUD.Taco_Ingredient
     add foreign key (ingredient_id) references TACO_CLOUD.Ingredient (id);
-alter table TACO_CLOUD.Ingredient_Ref
+alter table TACO_CLOUD.Taco_Ingredient
     add foreign key (taco_id) references TACO_CLOUD.Taco (id);

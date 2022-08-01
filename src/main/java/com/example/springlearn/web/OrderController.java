@@ -1,5 +1,6 @@
 package com.example.springlearn.web;
 
+import com.example.springlearn.data.OrderRepository;
 import com.example.springlearn.domain.TacoOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.support.SessionStatus;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
+    private OrderRepository orderRepo;
+
     @GetMapping("/current")
     public String orderForm() {
         return "order";
@@ -27,7 +30,7 @@ public class OrderController {
         if (errors.hasErrors()) {
             return "order";
         }
-
+        orderRepo.save(order);
         log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
 
