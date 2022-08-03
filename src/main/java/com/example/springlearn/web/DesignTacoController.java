@@ -12,9 +12,11 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static com.example.springlearn.domain.Ingredient.Type;
 
@@ -51,7 +53,7 @@ public class DesignTacoController {
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        Collection<Ingredient> ingredients = ingredientRepo.findAll();
+        Iterable<Ingredient> ingredients = ingredientRepo.findAll();
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
@@ -60,8 +62,9 @@ public class DesignTacoController {
     }
 
     private List<Ingredient> filterByType(
-            Collection<Ingredient> ingredients, Type type) {
-        return ingredients
+            Iterable<Ingredient> ingredients, Type type) {
+        return StreamSupport.stream(ingredients.spliterator(), false)
+                .collect(Collectors.toList())
                 .stream()
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());

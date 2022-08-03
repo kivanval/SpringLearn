@@ -1,16 +1,13 @@
 package com.example.springlearn.data;
 
 import com.example.springlearn.domain.Ingredient;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.Collection;
 import java.util.Optional;
 
-public interface IngredientRepository {
+public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
 
-    Collection<Ingredient> findAll();
+    Optional<Ingredient> findByName(String name);
 
-    Optional<Ingredient> findById(String id);
-
-    Ingredient save(Ingredient ingredient);
     
 }
