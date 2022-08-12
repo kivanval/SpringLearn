@@ -1,6 +1,9 @@
 package com.example.springlearn.domain;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
@@ -8,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,15 +19,13 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
-@Entity
 @NoArgsConstructor
-@AllArgsConstructor
-public class TacoOrder implements Serializable {
+@Entity
+@Table(name = "TACO_ORDERS")
+public class TacoOrder {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Date placedAt;

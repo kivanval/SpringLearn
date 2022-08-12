@@ -4,30 +4,29 @@ package com.example.springlearn.domain;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
-@Entity
 @NoArgsConstructor
-@AllArgsConstructor
-public class Ingredient implements Serializable {
+@Entity
+@Table(name = "INGREDIENTS")
+public class Ingredient {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id @GeneratedValue
+    @Setter(AccessLevel.NONE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Type type;
 
-    public enum Type {
-        WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
+    @ManyToOne
+    private IngredientType type;
+
+    public Ingredient(String name, IngredientType type) {
+        this.name = name;
+        this.type = type;
     }
 
     @Override
